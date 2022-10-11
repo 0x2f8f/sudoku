@@ -1,5 +1,8 @@
 package main.sudoku
 
+/*
+https://habr.com/ru/post/192102/
+ */
 fun main() {
     println("Generate sudoku...")
     val sudoku = generateBaseSudoku()
@@ -10,9 +13,9 @@ fun generateSudoku(): Array<IntArray> {
     return generateBaseSudoku()
 }
 
-private fun generateBaseSudoku(): Array<IntArray> {
-    val sudoku: Array<IntArray> = Array(9) {
-        IntArray(9)
+fun generateBaseSudoku(): Array<IntArray> {
+    val sudoku: Array<IntArray> = Array(Config.SUDOKU_SIZE) {
+        IntArray(Config.SUDOKU_SIZE)
     }
 
     var c = 1;
@@ -30,22 +33,4 @@ private fun generateBaseSudoku(): Array<IntArray> {
     }
 
     return sudoku
-}
-
-private fun printSudoku(sudoku: Array<IntArray>) {
-    println("Print sudoku:")
-    for (y in sudoku.indices) {
-        print("[")
-        for (x in sudoku[y].indices) {
-            print(" ${sudoku[y][x]}")
-            if ( (x+1)%3==0 && x<(sudoku[y].size-1) ) {
-                print(" ]  [")
-            }
-        }
-        print(" ]")
-        println()
-        if ( (y+1)%3==0 ) {
-            println()
-        }
-    }
 }
