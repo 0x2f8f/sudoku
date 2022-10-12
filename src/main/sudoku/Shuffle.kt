@@ -10,20 +10,49 @@ fun main() {
     printSudoku(swapColumnsSmall(generateBaseSudoku(), true))
     printSudoku(swapRowsBlock(generateBaseSudoku(), true))
     printSudoku(swapColumnsBlock(generateBaseSudoku(), true))
+    printSudoku(replaceNums(generateSudoku(), true))
     println("Mixing all methods")
     printSudoku(shuffle(generateBaseSudoku()))
 }
 
 fun shuffle(sudoku: Array<IntArray>, printLog: Boolean = false): Array<IntArray> {
-    transpose(sudoku, printLog)
     for (i in 0..(300..500).random()) {
-        when ((1..6).random()) {
+        when ((1..9).random()) {
             1 -> swapRowsSmall(sudoku, printLog)
             2 -> swapRowsSmall(sudoku, printLog)
             3 -> swapColumnsSmall(sudoku, printLog)
             4 -> swapColumnsSmall(sudoku, printLog)
             5 -> swapRowsBlock(sudoku, printLog)
             6 -> swapColumnsBlock(sudoku, printLog)
+            7 -> transpose(sudoku, printLog)
+            8 -> replaceNums(sudoku, printLog)
+            9 -> replaceNums(sudoku, printLog)
+        }
+    }
+
+    return sudoku
+}
+
+private fun replaceNums(sudoku: Array<IntArray>, printLog: Boolean = false): Array<IntArray> {
+    val num1: Int = (1 .. Config.SUDOKU_SIZE).random()
+    var num2: Int = (1 .. Config.SUDOKU_SIZE).random()
+
+    while (num2 == num1) {
+        num2 = (1 .. Config.SUDOKU_SIZE).random()
+    }
+
+    if (printLog) {
+        println("Replace nums in sudoku")
+        println("nums: $num1 and $num2")
+    }
+
+    for (y in sudoku.indices) {
+        for (x in sudoku[y].indices) {
+            if (sudoku[x][y] == num1) {
+                sudoku[x][y] = num2
+            } else if (sudoku[x][y] == num2) {
+                sudoku[x][y] = num1
+            }
         }
     }
 
